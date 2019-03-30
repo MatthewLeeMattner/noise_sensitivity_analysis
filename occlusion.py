@@ -6,6 +6,7 @@ from tensorflow.keras.applications.resnet50 import ResNet50
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
 import matplotlib.pyplot as plt
+from occlusion_interpretability import OcclusionInterpretability
 
 model = ResNet50(weights='imagenet')
 
@@ -17,7 +18,11 @@ x = np.expand_dims(x, axis=0)
 x = preprocess_input(x)
 
 # ==================================================
-
+oc = OcclusionInterpretability(model)
+img = np.squeeze(x, axis=0)
+outputs = oc.convolution_occlusion(img, (12, 12))
+print(outputs.shape)
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -42,4 +47,4 @@ for x in x_test:
     axs[0].imshow(x)
     axs[1].imshow(np.reshape(results, (28, 28)))
     plt.show()
-
+'''
